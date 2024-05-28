@@ -1,27 +1,35 @@
 import { useEffect, useState } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, json } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import HomePage from './pages/HomePage'
-import SampleData from './assets/SampleData'
+import { sampleToDo, sampleNotes } from './assets/SampleData'
 import ToDoList from './components/ToDoList'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('/')
-  const [toDoData, setToDoData] = useState('')
-  const [notesData, setNotesData] = useState('')
-
-  if (!localStorage.length) {
-    localStorage.setItem('toDo', JSON.stringify(SampleData[0]))
-    localStorage.setItem('notes', JSON.stringify(SampleData[1]))
-
-    setToDoData(JSON.parse(localStorage.getItem('toDo')))
-    setNotesData(JSON.parse(localStorage.getItem('notes')))
-  }
+  const [toDoData, setToDoData] = useState(() => {
+    const localValue = localStorage.getItem('toDo')
+    if (localValue == null) return []
+    return JSON.parse(localValue)
+  })
+  const [notesData, setNotesData] = useState(() => {
+    const localValue = localStorage.getItem('notes')
+    if (localValue == null) return []
+    return JSON.parse(localValue)
+  })
 
   useEffect(() => {
-    setToDoData(JSON.parse(localStorage.getItem('toDo')))
-    setNotesData(JSON.parse(localStorage.getItem('notes')))
-  }, [])
+    localStorage.setItem('toDo', JSON.stringify(sampleToDo))
+    localStorage.setItem('notes', JSON.stringify(sampleNotes))
+  }, [toDoData, notesData])
+
+  // if (!localStorage.length) {
+  //   localStorage.setItem('toDo', JSON.stringify(sampleToDo))
+  //   localStorage.setItem('notes', JSON.stringify(sampleNotes))
+
+  //   setToDoData(JSON.parse(localStorage.getItem('toDo')))
+  //   setNotesData(JSON.parse(localStorage.getItem('notes')))
+  // }
 
 
   return (
@@ -55,6 +63,7 @@ function App() {
             <div>
               <Link>Notes</Link>
             </div>
+
 
           </div>
         </nav>

@@ -1,12 +1,17 @@
+import AddToDo from "../components/AddToDo";
 import ToDoList from "../components/ToDoList"
 import { useOutletContext } from "react-router-dom";
 
 
 const AllToDo = () => {
-    const [toDoData, notesData, fungus] = useOutletContext()
-    console.log(toDoData.toDo);
+    const [toDoData, notesData] = useOutletContext()
+
     return (
-        <ToDoList toDoData={toDoData.toDo} />
+        <>
+            <AddToDo />
+            <ToDoList toDoData={toDoData} />
+        </>
+
     )
 
 }
