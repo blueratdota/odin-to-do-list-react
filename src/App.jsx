@@ -67,8 +67,8 @@ function App() {
 
           </div>
         </nav>
-        <main className='bg-orange-100 basis-full'>
-          <div >
+        <main className='bg-orange-100 basis-full '>
+          <div className='py-4 px-10'>
             {currentPage === '/' ?
               <HomePage /> :
               <Outlet context={[toDoData, notesData]} />}

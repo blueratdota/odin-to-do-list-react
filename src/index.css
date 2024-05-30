@@ -5,6 +5,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+
+    .input-radio {
+        opacity: 0;
+        border: 1px solid;
+    }
+
+    label[class$="priority"] {
+        font-weight: 400;
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 2px 14px;
+        font-size: 1rem;
+    }
+
+    .priority-options input[type="radio"]:checked+label {
+        font-weight: bold;
+        border-width: 3px
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
