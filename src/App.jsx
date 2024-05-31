@@ -19,8 +19,8 @@ function App() {
   })
 
   useEffect(() => {
-    localStorage.setItem('toDo', JSON.stringify(sampleToDo))
-    localStorage.setItem('notes', JSON.stringify(sampleNotes))
+    localStorage.setItem('toDo', JSON.stringify(toDoData))
+    localStorage.setItem('notes', JSON.stringify(notesData))
   }, [toDoData, notesData])
 
   // if (!localStorage.length) {
@@ -71,7 +71,7 @@ function App() {
           <div className='py-4 px-10'>
             {currentPage === '/' ?
               <HomePage /> :
-              <Outlet context={[toDoData, notesData]} />}
+              <Outlet context={[toDoData, setToDoData, notesData, setNotesData]} />}
           </div>
         </main>
       </section>

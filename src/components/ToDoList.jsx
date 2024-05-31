@@ -27,24 +27,6 @@ const ToDoList = ({ toDoData, filter }) => {
                         </AccordionActions>
                     </Accordion>
                 </div>
-
-                // <div className="flex " key={toDo.id}>
-                //     <div>{toDo.priority}</div>
-                //     <div>{toDo.id}</div>
-                //     <div className="flex ">
-                //         <input type="checkbox" />
-                //         <div>{toDo.title}</div>
-                //     </div>
-                //     <div>{toDo.dueDate}</div>
-                //     <div className='button-box'>
-                //         <SvgIcon>{<EditNoteIcon />}</SvgIcon>
-                //         <SvgIcon>{<DeleteForeverIcon />}</SvgIcon>
-                //     </div>
-
-
-
-                // </div>
-
             )
         })
     )

@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 
 
 const AllToDo = () => {
-    const [toDoData, notesData] = useOutletContext()
+    const [toDoData, setToDoData] = useOutletContext()
 
     return (
         <div className="flex flex-col gap-2">
