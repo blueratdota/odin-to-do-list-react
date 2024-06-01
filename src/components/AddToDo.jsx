@@ -8,7 +8,10 @@ import SvgIcon from '@mui/material/SvgIcon';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AddToDo = () => {
-    const [toDoData, setToDoData] = useOutletContext()
+    const context = useOutletContext()
+    // console.log(context.toDoData);
+    // console.log(context.setToDoData);
+    // const [toDoData, setToDoData] = useOutletContext()
     const [newEntry, setNewEntry] = useImmer({
         "title": '',
         "details": '',
@@ -24,7 +27,6 @@ const AddToDo = () => {
     //use ref for toggling showModal() and  close()
     //handleClickOutside for closing the modal if anything outside the modal is clicked
     const dialogRef = useRef(null)
-    const radioRef = useRef(null)
 
     const handleOpen = () => {
         dialogRef.current.showModal()
@@ -64,7 +66,7 @@ const AddToDo = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        setToDoData([...toDoData, { "id": uuidv4(), ...newEntry }])
+        context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry }])
         setNewEntry({
             "title": '',
             "details": '',
@@ -73,13 +75,14 @@ const AddToDo = () => {
             "inProject": null,
             "projectName": null
         })
-        console.log(toDoData);
+
+        dialogRef.current.close()
 
     }
 
     return (
         <div className="flex bg-white shadow-sm rounded-lg text-lg w-[75%] min-h-[48px] px-4 items-center">
-            <p onClick={handleOpen} className="w-full" >Add something to do - #of entries <span>{toDoData.length}</span></p>
+            <p onClick={handleOpen} className="w-full" >Add something to do - #of entries <span>{context.toDoData.length}</span></p>
             <dialog
                 ref={dialogRef}
                 onClick={handleClickOutside}

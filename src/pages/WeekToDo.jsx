@@ -1,8 +1,18 @@
+import AddToDo from "../components/AddToDo";
+import ToDoList from "../components/ToDoList"
+import { useOutletContext } from "react-router-dom";
+
 const WeekToDo = () => {
+    const context = useOutletContext()
+    // console.log(context.currentPage);
+    // console.log(context.toDoData);
+    // console.log(context.setToDoData);
     return (
-        <div>
-            WeekToDO WeekToDO WeekToDO
+        <div className="flex flex-col gap-2">
+            <AddToDo />
+            <ToDoList toDoData={context.toDoData} currentPage={context.currentPage} />
         </div>
+
     )
 
 }

@@ -2,12 +2,35 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { SvgIcon, Accordion, AccordionSummary, AccordionDetails, AccordionActions, Button, Fade } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { isSameDay, isSameWeek } from 'date-fns';
 
 
-const ToDoList = ({ toDoData, filter }) => {
+const ToDoList = ({ toDoData, currentPage }) => {
+    console.log(currentPage);
+
+    const today = new Date().toISOString().slice(0, 10)
+    const completeToDoList = toDoData
+
+    let filteredToDo = []
+
+    if (currentPage == 'all-to-do') {
+        filteredToDo = toDoData
+    }
+    if (currentPage == 'today-to-do') {
+        filteredToDo = completeToDoList.filter((entry) => {
+            return isSameDay(today, entry.dueDate)
+        })
+    }
+    if (currentPage == 'week-to-do') {
+        console.log('WEEK to do');
+        filteredToDo = completeToDoList.filter((entry) => {
+            return isSameWeek(today, entry.dueDate)
+        })
+    }
+
 
     return (
-        toDoData.map(toDo => {
+        filteredToDo.map(toDo => {
             return (
                 <div className='w-[75%]' key={toDo.id}>
                     <Accordion className='rounded-lg text-xl shadow-sm' >

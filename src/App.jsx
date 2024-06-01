@@ -4,9 +4,12 @@ import NavBar from './components/NavBar'
 import HomePage from './pages/HomePage'
 import { sampleToDo, sampleNotes } from './assets/SampleData'
 import ToDoList from './components/ToDoList'
+import AddProject from './components/AddProject'
+import ProjectList from './components/ProjectList'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('/')
+  const [currentProjectPage, setCurrentProjectPage] = useState()
   const [toDoData, setToDoData] = useState(() => {
     const localValue = localStorage.getItem('toDo')
     if (localValue == null) return []
@@ -17,20 +20,18 @@ function App() {
     if (localValue == null) return []
     return JSON.parse(localValue)
   })
+  const [projectsData, setProjectsData] = useState(() => {
+    const localValue = localStorage.getItem('projects')
+    if (localValue == null) return []
+    return JSON.parse(localValue)
+  })
+
 
   useEffect(() => {
     localStorage.setItem('toDo', JSON.stringify(toDoData))
     localStorage.setItem('notes', JSON.stringify(notesData))
-  }, [toDoData, notesData])
-
-  // if (!localStorage.length) {
-  //   localStorage.setItem('toDo', JSON.stringify(sampleToDo))
-  //   localStorage.setItem('notes', JSON.stringify(sampleNotes))
-
-  //   setToDoData(JSON.parse(localStorage.getItem('toDo')))
-  //   setNotesData(JSON.parse(localStorage.getItem('notes')))
-  // }
-
+    localStorage.setItem('projects', JSON.stringify(projectsData))
+  }, [toDoData, notesData, projectsData])
 
   return (
     <div className='bg-slate-600 h-screen flex flex-col'>
@@ -55,9 +56,14 @@ function App() {
             <div className='border-b pb-3'>
               <p className='mb-2'>Projects</p>
               <div className='flex flex-col gap-2 ml-5'>
-                <Link>Project 1</Link>
-                <Link>Project 2</Link>
-                <button>Add Project</button>
+                <ProjectList
+                  projects={projectsData}
+                >
+                </ProjectList>
+                <AddProject
+                  projectsData={projectsData}
+                  setProjectsData={setProjectsData}
+                ></AddProject>
               </div>
             </div>
             <div>
@@ -71,7 +77,15 @@ function App() {
           <div className='py-4 px-10'>
             {currentPage === '/' ?
               <HomePage /> :
-              <Outlet context={[toDoData, setToDoData, notesData, setNotesData]} />}
+              <Outlet context={
+                {
+                  toDoData: toDoData,
+                  setToDoData: setToDoData,
+                  currentPage: currentPage,
+                  projectsData: projectsData,
+                  setProjectsData: setProjectsData
+                }} />
+            }
           </div>
         </main>
       </section>
