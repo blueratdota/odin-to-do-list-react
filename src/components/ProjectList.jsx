@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const ProjectList = ({ projects }) => {
-    console.log(projects);
     return (
         projects.map(entry => {
             return (

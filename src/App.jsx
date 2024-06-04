@@ -63,6 +63,7 @@ function App() {
                 <AddProject
                   projectsData={projectsData}
                   setProjectsData={setProjectsData}
+                  onClick={() => setCurrentPage('projects-to-do')}
                 ></AddProject>
               </div>
             </div>

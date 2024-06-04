@@ -40,6 +40,7 @@ const ToDoList = ({ toDoData, currentPage }) => {
                             <div>{toDo.priority}</div>
                             <div>{toDo.title}</div>
                             <div>{toDo.dueDate}</div>
+                            <div>{`${toDo.inProject}`}</div>
                         </AccordionSummary>
                         <AccordionDetails>
                             <div>{toDo.details}</div>

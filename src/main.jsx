@@ -1,16 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StyledEngineProvider } from '@mui/material';
 import './index.css'
 import AllToDo from './pages/AllToDo.jsx';
 import WeekToDo from './pages/WeekToDo.jsx';
 import TodayToDo from './pages/TodayToDo.jsx';
 import Projects from './pages/Projects.jsx';
+
+import { ThemeProvider, createTheme } from '@mui/material';
+
+const rootElement = document.getElementById("root");
 
 
 

@@ -1,15 +1,19 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from 'uuid';
 import ToDoList from "../components/ToDoList"
 import { useOutletContext } from "react-router-dom";
+
 //mui imports
-import SvgIcon from '@mui/material/SvgIcon';
+// import SvgIcon from '@mui/material/SvgIcon';
+import { Switch, SvgIcon, FormGroup, FormControlLabel, FormControl, NativeSelect } from "@mui/material";
+import Select from 'react-select'
 import CloseIcon from '@mui/icons-material/Close';
+import _default from "react-select";
 
 const AddToDo = () => {
     const context = useOutletContext()
-    // console.log(context.toDoData);
+    console.log(context.toDoData);
     // console.log(context.setToDoData);
     // const [toDoData, setToDoData] = useOutletContext()
     const [newEntry, setNewEntry] = useImmer({
@@ -17,11 +21,9 @@ const AddToDo = () => {
         "details": '',
         "dueDate": '',
         "priority": '',
-        "inProject": null,
+        "inProject": false,
         "projectName": null
     })
-
-    const currentEntry = newEntry
 
     //handles modal
     //use ref for toggling showModal() and  close()
@@ -30,9 +32,11 @@ const AddToDo = () => {
 
     const handleOpen = () => {
         dialogRef.current.showModal()
+
     }
     const handleClose = () => {
         dialogRef.current.close()
+
     }
     const handleClickOutside = (e) => {
         const dialogDimensions = dialogRef.current.getBoundingClientRect()
@@ -43,7 +47,7 @@ const AddToDo = () => {
             e.clientY > dialogDimensions.bottom
         ) {
             console.log('close modal');
-            dialogRef.current.close()
+            handleClose()
         }
     }
 
@@ -60,25 +64,57 @@ const AddToDo = () => {
     const handleSelectPriority = (e) => {
         setNewEntry((data) => { data.priority = e.target.value })
     }
+    const handleSwitch = (e) => {
+        setNewEntry((data) => { data.inProject = !data.inProject })
+    }
+    const handleSelect = (e) => {
+        setNewEntry((data) => { data.projectName = e.value })
+
+    }
 
 
     //button submit function
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (newEntry.inProject) {
+            if (!newEntry.projectName) {
+                alert('no project input')
+            }
+            else {
+                context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry, }])
+                setNewEntry({
+                    "title": '',
+                    "details": '',
+                    "dueDate": '',
+                    "priority": '',
+                    "inProject": false,
+                    "projectName": null
+                })
+                dialogRef.current.close()
+            }
 
-        context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry }])
-        setNewEntry({
-            "title": '',
-            "details": '',
-            "dueDate": '',
-            "priority": '',
-            "inProject": null,
-            "projectName": null
-        })
+        }
+        else {
+            context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry, }])
+            setNewEntry({
+                "title": '',
+                "details": '',
+                "dueDate": '',
+                "priority": '',
+                "inProject": false,
+                "projectName": null
+            })
 
-        dialogRef.current.close()
+            dialogRef.current.close()
+        }
 
     }
+
+    const options = context.projectsData.map((project) => {
+        return (
+            { value: project.title, label: project.title }
+        )
+    })
 
     return (
         <div className="flex bg-white shadow-sm rounded-lg text-lg w-[75%] min-h-[48px] px-4 items-center">
@@ -90,18 +126,37 @@ const AddToDo = () => {
                 <div className="flex justify-between items-center px-4 py-2 bg-yellow-500">
                     <p className="text-xl font-bold">Add new To Do Entry</p>
                     <SvgIcon className="stroke-[10px]" onClick={handleClose}>{<CloseIcon />}</SvgIcon>
+
+
+                    {/* <SvgIcon className="stroke-[10px]" onClick={handleClose}>{<CloseIcon />}</SvgIcon> */}
                 </div>
                 <div>
                     <form action="submit" className="flex flex-col p-4 gap-4" >
                         <input onChange={handleTitleInput} type="text" placeholder="Title: Clean my wardrobe" required maxLength={50} className="text-2xl border-0 outline-none" value={newEntry.title} />
-
                         <textarea onChange={handleDetailsInput} name="details" id="details" cols={30} rows={8} placeholder="Details: fold shirts, iron uniform" required maxLength={400} className="text-xl border-0 outline-none" value={newEntry.details}></textarea>
+                        <div>
+                            <FormControl>
+                                <FormGroup>
+                                    <FormControlLabel
+                                        control={<Switch
+                                            checked={newEntry.inProject}
+                                            onChange={handleSwitch}
+                                            disabled={context.projectsData.length <= 0}
+                                        />} label={!context.projectsData.length ? "Create Project First" : "In Project?"} />
+                                </FormGroup>
+                                <Select
+                                    options={options}
 
+                                    isDisabled={!newEntry.inProject}
+                                    onChange={handleSelect}
+                                // value={newEntry.projectName}
+                                ></Select>
+                            </FormControl>
+                        </div>
                         <label htmlFor="input-date" className="text-xl font-bold">
                             Due date:
                             <input onChange={handleDateInput} className="ml-2 p-1 px-4 rounded-lg border border-yellow-500 outline-yellow-600 text-lg font-thin" type="date" id="input-date" value={newEntry.dueDate} required />
                         </label>
-
                         <div>
                             <div>
                                 <label htmlFor="input-priority" className="text-xl font-bold priority-options">

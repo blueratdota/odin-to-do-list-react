@@ -58,7 +58,7 @@ const AddProject = ({ projectsData, setProjectsData }) => {
                     <p className="text-xl font-bold">Add new project</p>
                     <SvgIcon className="stroke-[10px]" onClick={handleClose}>{<CloseIcon />}</SvgIcon>
                 </div>
-                <form action="submit" className="flex flex-col p-4 gap-4">
+                <form action="#" className="flex flex-col p-4 gap-4">
                     <input onChange={handleTitleInput} type="text" placeholder="Project Title: Maintenance Activities" required maxLength={50} className="text-3xl border-0 outline-none" value={newEntry.title} />
                 </form>
                 <div className="mb-6 mt-3 text-center">
