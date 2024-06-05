@@ -3,6 +3,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { SvgIcon, Accordion, AccordionSummary, AccordionDetails, AccordionActions, Button, Fade } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { isSameDay, isSameWeek } from 'date-fns';
+import PriorityCircle from './PriorityCircle';
 
 
 const ToDoList = ({ toDoData, currentPage }) => {
@@ -36,11 +37,15 @@ const ToDoList = ({ toDoData, currentPage }) => {
                     <Accordion className='rounded-lg text-xl shadow-sm' >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
-                            slots={{ transition: Fade }}>
-                            <div>{toDo.priority}</div>
-                            <div>{toDo.title}</div>
-                            <div>{toDo.dueDate}</div>
-                            <div>{`${toDo.inProject}`}</div>
+                            slots={{ transition: Fade }}
+                        >
+                            <div className='flex flex-row items-center grow '>
+                                <div className='flex items-center gap-4 grow basis-[75%]'>
+                                    <PriorityCircle priority={toDo.priority}></PriorityCircle>
+                                    <div className='font-bold'>{toDo.title}</div>
+                                </div>
+                                <div className='grow basis-auto'>Due date: {toDo.dueDate}</div>
+                            </div>
                         </AccordionSummary>
                         <AccordionDetails>
                             <div>{toDo.details}</div>

@@ -71,11 +71,29 @@ const AddToDo = () => {
         setNewEntry((data) => { data.projectName = e.value })
 
     }
+    //checking input fields
+    const checkFields = () => {
+        if (newEntry.title && newEntry.details && newEntry.dueDate && newEntry.priority) {
+            return true
+        }
+        return false
+    }
+    const checkDuplicateToDo = (toDo) => {
+        const toDoTitles = context.toDoData.map((entry) => {
+            return JSON.stringify({ title: entry.title.toLowerCase(), dueDate: entry.dueDate })
+        })
+        return toDoTitles.includes(JSON.stringify({ title: toDo.title.toLowerCase(), dueDate: toDo.dueDate }))
+    }
 
 
     //button submit function
     const handleSubmit = (e) => {
         e.preventDefault()
+        //for project toDo
+        if (checkDuplicateToDo(newEntry)) {
+            alert('duplicate entry')
+            return
+        }
         if (newEntry.inProject) {
             if (!newEntry.projectName) {
                 alert('no project input')
@@ -94,18 +112,25 @@ const AddToDo = () => {
             }
 
         }
+        // for not in project toDo
         else {
-            context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry, }])
-            setNewEntry({
-                "title": '',
-                "details": '',
-                "dueDate": '',
-                "priority": '',
-                "inProject": false,
-                "projectName": null
-            })
+            if (checkFields()) {
+                context.setToDoData([...context.toDoData, { "id": uuidv4(), ...newEntry, }])
+                setNewEntry({
+                    "title": '',
+                    "details": '',
+                    "dueDate": '',
+                    "priority": '',
+                    "inProject": false,
+                    "projectName": null
+                })
 
-            dialogRef.current.close()
+                dialogRef.current.close()
+            }
+            else {
+                alert('empty field / duplicate title')
+            }
+
         }
 
     }
@@ -135,7 +160,7 @@ const AddToDo = () => {
                         <input onChange={handleTitleInput} type="text" placeholder="Title: Clean my wardrobe" required maxLength={50} className="text-2xl border-0 outline-none" value={newEntry.title} />
                         <textarea onChange={handleDetailsInput} name="details" id="details" cols={30} rows={8} placeholder="Details: fold shirts, iron uniform" required maxLength={400} className="text-xl border-0 outline-none" value={newEntry.details}></textarea>
                         <div>
-                            <FormControl>
+                            <FormControl className="flex flex-row">
                                 <FormGroup>
                                     <FormControlLabel
                                         control={<Switch
@@ -146,11 +171,10 @@ const AddToDo = () => {
                                 </FormGroup>
                                 <Select
                                     options={options}
-
                                     isDisabled={!newEntry.inProject}
                                     onChange={handleSelect}
-                                // value={newEntry.projectName}
-                                ></Select>
+                                >
+                                </Select>
                             </FormControl>
                         </div>
                         <label htmlFor="input-date" className="text-xl font-bold">

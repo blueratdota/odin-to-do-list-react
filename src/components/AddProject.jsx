@@ -11,7 +11,6 @@ const AddProject = ({ projectsData, setProjectsData }) => {
     const [newEntry, setNewEntry] = useImmer({
         "title": '',
     })
-
     const dialogRef = useRef(null)
     const handleOpen = () => {
         dialogRef.current.showModal()
@@ -34,16 +33,26 @@ const AddProject = ({ projectsData, setProjectsData }) => {
     const handleTitleInput = (e) => {
         setNewEntry((data) => { data.title = e.target.value })
     }
+
+    const checkDuplicateProject = (project) => {
+        const projectTitles = projectsData.map((entry) => {
+            return entry.title.toLowerCase()
+        })
+        return projectTitles.includes(project.title.toLowerCase())
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        setProjectsData([...projectsData, { "id": uuidv4(), ...newEntry }])
-        setNewEntry({
-            "title": '',
-        })
-
-        dialogRef.current.close()
-
+        if (checkDuplicateProject(newEntry)) {
+            alert('this project already exists')
+        }
+        else {
+            setProjectsData([...projectsData, { "id": uuidv4(), ...newEntry }])
+            setNewEntry({
+                "title": '',
+            })
+            dialogRef.current.close()
+        }
     }
 
 

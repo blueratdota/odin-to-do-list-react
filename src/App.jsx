@@ -39,7 +39,7 @@ function App() {
         <h1 className='text-4xl bg-yellow-500 py-3 pl-8'><Link onClick={() => setCurrentPage('/')} to={'/'}>Odin Project: To Do List</Link></h1>
       </header>
       <section className='flex flex-1'>
-        <nav className='bg-blue-700 basis-[15%]'>
+        <nav className='bg-blue-700 basis-[18%]'>
           <div className='flex flex-col text-2xl px-4 pt-8 gap-3'>
             <div className='border-b pb-3'>
               <Link
