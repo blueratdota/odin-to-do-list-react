@@ -147,7 +147,7 @@ const AddToDo = () => {
             <dialog
                 ref={dialogRef}
                 onClick={handleClickOutside}
-                className=" w-[40vw] h-[500px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" >
+                className=" w-[40vw] h-[600px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" >
                 <div className="flex justify-between items-center px-4 py-2 bg-yellow-500">
                     <p className="text-xl font-bold">Add new To Do Entry</p>
                     <SvgIcon className="stroke-[10px]" onClick={handleClose}>{<CloseIcon />}</SvgIcon>
