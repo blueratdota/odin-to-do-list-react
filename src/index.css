@@ -1,38 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jersey+25&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+  .input-radio {
+    opacity: 0;
+    border: 1px solid;
+  }
 
-    .input-radio {
-        opacity: 0;
-        border: 1px solid;
-    }
+  label[class$="priority"] {
+    font-weight: 400;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 2px 14px;
+    font-size: 1rem;
+  }
 
-    label[class$="priority"] {
-        font-weight: 400;
-        border: 1px solid;
-        border-radius: 5px;
-        padding: 2px 14px;
-        font-size: 1rem;
-    }
+  .priority-options input[type="radio"]:checked + label {
+    font-weight: bold;
+    border-width: 3px;
+  }
+  .edit-radio-label input:checked + span {
+    border-color: red;
+    font-weight: bold;
+  }
 
-    .priority-options input[type="radio"]:checked+label {
-        font-weight: bold;
-        border-width: 3px
-    }
+  .nav-links {
+    @apply flex gap-2 px-2 py-1 rounded-lg items-center;
+  }
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 dialog::backdrop {
-    backdrop-filter: blur(4px);
-
+  backdrop-filter: blur(4px);
 }

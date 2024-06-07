@@ -6,6 +6,7 @@ import { sampleToDo, sampleNotes } from "./assets/SampleData";
 import ToDoList from "./components/ToDoList";
 import AddProject from "./components/AddProject";
 import ProjectList from "./components/ProjectList";
+import { isSameDay, isSameWeek } from "date-fns";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("/");
@@ -32,8 +33,16 @@ function App() {
     localStorage.setItem("projects", JSON.stringify(projectsData));
   }, [toDoData, notesData, projectsData]);
 
+  const today = new Date().toISOString().slice(0, 10);
+  const todayDue = toDoData.filter((entry) => {
+    return isSameDay(today, entry.dueDate);
+  }).length;
+  const weekDue = toDoData.filter((entry) => {
+    return isSameWeek(today, entry.dueDate);
+  }).length;
+
   return (
-    <div className="bg-slate-600 h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <header>
         <h1 className="text-4xl bg-yellow-500 py-3 pl-8">
           <Link onClick={() => setCurrentPage("/")} to={"/"}>
@@ -42,29 +51,35 @@ function App() {
         </h1>
       </header>
       <section className="flex flex-1">
-        <nav className="bg-blue-700 basis-[18%]">
+        <nav className="bg-blue-500 basis-[20%] min-w-[18%]">
           <div className="flex flex-col text-2xl px-4 pt-8 gap-3">
             <div className="border-b pb-3">
               <Link
                 onClick={() => setCurrentPage("all-to-do")}
                 to={"/all-to-do"}
+                className={`nav-links ${currentPage == "all-to-do" ? "bg-blue-700" : null}`}
               >
-                All
+                <div>{`All - `}</div>
+                <div className="font-bold">{toDoData.length}</div>
               </Link>
             </div>
-            <div className="flex flex-col gap-2 border-b pb-2">
+            <div className="flex flex-col gap-1 border-b pb-3">
               <Link
                 onClick={() => setCurrentPage("today-to-do")}
                 to={"/today-to-do"}
+                className={`nav-links ${currentPage == "today-to-do" ? "bg-blue-700" : null}`}
               >
-                Today
+                <div>{`Today - `}</div>
+                <div className="font-bold">{todayDue}</div>
               </Link>
               <div></div>
               <Link
                 onClick={() => setCurrentPage("week-to-do")}
                 to={"/week-to-do"}
+                className={`nav-links ${currentPage == "week-to-do" ? "bg-blue-700" : null}`}
               >
-                Week
+                <div>{`Week - `}</div>
+                <div className="font-bold">{weekDue}</div>
               </Link>
             </div>
             <div className="border-b pb-3">
@@ -74,6 +89,7 @@ function App() {
                   projects={projectsData}
                   currentProject={currentProjectPage}
                   setProject={setCurrentProjectPage}
+                  currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                 ></ProjectList>
                 <AddProject
@@ -89,26 +105,29 @@ function App() {
           </div>
         </nav>
         <main className="bg-orange-100 basis-full ">
-          <div className="py-4 px-10">
-            {currentPage === "/" ? (
-              <HomePage />
-            ) : (
-              <Outlet
-                context={{
-                  toDoData: toDoData,
-                  setToDoData: setToDoData,
-                  currentPage: currentPage,
-                  projectsData: projectsData,
-                  setProjectsData: setProjectsData,
-                  currentProjectPage: currentProjectPage,
-                  setCurrentProjectPage: setCurrentProjectPage
-                }}
-              />
-            )}
+          <div className="py-4 px-10 flex gap-10">
+            <div className="basis-full">
+              {currentPage === "/" ? (
+                <HomePage />
+              ) : (
+                <Outlet
+                  context={{
+                    toDoData: toDoData,
+                    setToDoData: setToDoData,
+                    currentPage: currentPage,
+                    projectsData: projectsData,
+                    setProjectsData: setProjectsData,
+                    currentProjectPage: currentProjectPage,
+                    setCurrentProjectPage: setCurrentProjectPage
+                  }}
+                />
+              )}
+            </div>
+            <div className="basis-1/3">xxx</div>
           </div>
         </main>
       </section>
-      <footer>ree</footer>
+      <footer className="bg-red-500">ree</footer>
     </div>
   );
 }
