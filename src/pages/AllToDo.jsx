@@ -13,6 +13,7 @@ const AllToDo = () => {
         toDoData={context.toDoData}
         setToDoData={context.setToDoData}
         currentPage={context.currentPage}
+        projectsData={context.projectsData}
       />
       <AddToDo />
     </div>

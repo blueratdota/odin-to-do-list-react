@@ -8,19 +8,29 @@ import {
   Switch,
   SvgIcon,
   FormLabel,
+  FormGroup,
   FormControlLabel,
   FormControl,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
+  Button
 } from "@mui/material";
 import Select from "react-select";
 import CloseIcon from "@mui/icons-material/Close";
 import _default from "react-select";
 
-const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
+const EditDialog = ({
+  dataEdit,
+  handleClose,
+  dialogRef,
+  toDoData,
+  setToDoData
+}) => {
   const [toEdit, setToEdit] = useImmer(dataEdit);
   const context = useOutletContext();
   const [prevSelect, setPrevSelect] = useState();
+
+  // console.log(toEdit);
 
   //inputfields
   function handleTitleInput(e) {
@@ -43,6 +53,71 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
       data.priority = e.target.value;
     });
   }
+  function handleSwitch(e) {
+    setToEdit((data) => {
+      data.inProject = !data.inProject;
+      data.projectName = data.inProject
+        ? prevSelect
+          ? prevSelect
+          : toEdit.projectName
+        : null;
+      setPrevSelect(toEdit.projectName);
+    });
+  }
+  const options = context.projectsData.map((project) => {
+    return { value: project.title, label: project.title };
+  });
+  function handleSelect(e) {
+    setToEdit((data) => {
+      data.projectName = e.value;
+    });
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //for project toDo
+    if (checkChanges()) {
+      alert("No Changes!");
+      return;
+    }
+    if (toEdit.inProject) {
+      if (!toEdit.projectName) {
+        alert("no project input");
+      } else {
+        proceedSubmit();
+      }
+    }
+    // for not in project toDo
+    else {
+      proceedSubmit();
+    }
+  };
+  const checkChanges = () => {
+    return JSON.stringify(dataEdit) == JSON.stringify(toEdit);
+  };
+  const checkFields = () => {
+    if (toEdit.title && toEdit.details && toEdit.dueDate && toEdit.priority) {
+      return true;
+    }
+    return false;
+  };
+  const proceedSubmit = () => {
+    if (checkFields()) {
+      setToDoData(
+        toDoData.map((toDo) => {
+          if (toDo.id == toEdit.id) {
+            return { ...toEdit };
+          } else return toDo;
+        })
+      );
+      console.log("submit changes");
+      handleClose();
+    } else {
+      alert("empty field / duplicate title");
+    }
+  };
+  const handleReset = () => {
+    setToEdit(dataEdit);
+  };
 
   return (
     <>
@@ -52,8 +127,6 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
           {<CloseIcon />}
         </SvgIcon>
       </div>
-      <div>{toEdit.title}</div>
-      <div>{toEdit.priority}</div>
       <div>
         <form action="submit" className="flex flex-col p-4 gap-4">
           <input
@@ -75,13 +148,13 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
             className="text-xl border-0 outline-none"
             value={toEdit.details}
           ></textarea>
-          {/* <div>
+          <div>
             <FormControl className="flex flex-row">
               <FormGroup>
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={localEdit.inProject}
+                      checked={toEdit.inProject}
                       onChange={handleSwitch}
                       disabled={context.projectsData.length <= 0}
                     />
@@ -95,12 +168,22 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
               </FormGroup>
               <Select
                 options={options}
-                isDisabled={!localEdit.inProject}
+                isDisabled={!toEdit.inProject}
+                // defaultValue={() => {
+                //   let i = "";
+                //   for (const x in options) {
+                //     if (options[x].value == toEdit.projectName) {
+                //       i = x;
+                //     }
+                //   }
+                //   return options[i];
+                // }}
+                value={{ value: toEdit.projectName, label: toEdit.projectName }}
                 onChange={handleSelect}
                 className="w-96"
               ></Select>
             </FormControl>
-          </div> */}
+          </div>
           <label htmlFor="input-date" className="text-xl font-bold">
             Due date:
             <input
@@ -130,7 +213,7 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
                 </ToggleButton>
                 <ToggleButton
                   value="medium"
-                  className={`${toEdit.priority == "medium" ? "bg-yellow-500 font-bold" : "bg-yellow-100"}`}
+                  className={`${toEdit.priority == "medium" ? "bg-yellow-400 font-bold" : "bg-yellow-100"}`}
                 >
                   MEDIUM
                 </ToggleButton>
@@ -143,14 +226,20 @@ const EditDialog = ({ dataEdit, handleClose, toDoData }) => {
               </ToggleButtonGroup>
             </div>
 
-            {/* <Button
-              //   onClick={handleSubmit}
+            <Button
+              onClick={handleSubmit}
               variant="outlined"
               className="mr-10 w-40"
             >
-              Submit
-            </Button> */}
-            <div>ree</div>
+              Save Changes
+            </Button>
+            <Button
+              onClick={handleReset}
+              variant="outlined"
+              className="mr-10 w-40"
+            >
+              Reset
+            </Button>
           </div>
         </form>
       </div>

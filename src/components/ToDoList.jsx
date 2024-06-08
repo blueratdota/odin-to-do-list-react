@@ -29,7 +29,7 @@ const ToDoList = ({ toDoData, currentPage, currentProject, setToDoData }) => {
     });
   }
   if (currentPage == "projects-to-do") {
-    console.log("projects to do");
+    // console.log("projects to do");
     filteredToDo = completeToDoList.filter((entry) => {
       return entry.projectName == currentProject;
     });

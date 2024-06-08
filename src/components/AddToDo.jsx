@@ -176,7 +176,7 @@ const AddToDo = () => {
         className="w-auto ml-5 font-bold hover:cursor-pointer"
         onClick={handleOpen}
       >
-        {`Add something to do! There are currently ${context.toDoData.length} things to do`}
+        {`Click here to add something to do! There are currently ${context.toDoData.length} things to do.`}
       </p>
       <dialog
         ref={dialogRef}

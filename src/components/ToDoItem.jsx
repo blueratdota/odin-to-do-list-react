@@ -24,7 +24,7 @@ const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
     dialogRef.current.showModal();
   };
   const handleClose = () => {
-    console.log("close modal");
+    // console.log("close modal");
     dialogRef.current.close();
   };
   const handleClickOutside = (e) => {
@@ -38,6 +38,7 @@ const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
       handleClose();
     }
   };
+
   return (
     <div className="">
       <Accordion className="rounded-lg text-xl shadow-sm">
@@ -56,11 +57,13 @@ const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
         <AccordionDetails>
           {toDo.inProject ? (
             <div>
-              Included in <span className="font-bold">{toDo.projectName}</span>
+              Included in{" "}
+              <span className="font-bold">{`Project ${toDo.projectName}`}</span>
             </div>
           ) : (
-            <div>no</div>
+            <div>Not in a project</div>
           )}
+          <p className="font-bold">Details:</p>
           <div>{toDo.details}</div>
         </AccordionDetails>
         <AccordionActions>
@@ -74,6 +77,9 @@ const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
               <EditDialog
                 dataEdit={currentData}
                 handleClose={handleClose}
+                dialogRef={dialogRef}
+                toDoData={toDoData}
+                setToDoData={setToDoData}
               ></EditDialog>
             </dialog>
           </div>
