@@ -10,6 +10,7 @@ import TodayToDo from "./pages/TodayToDo.jsx";
 import Projects from "./pages/Projects.jsx";
 
 import { ThemeProvider, createTheme } from "@mui/material";
+import Notes from "./pages/Notes.jsx";
 
 const rootElement = document.getElementById("root");
 
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
       { path: "all-to-do", element: <AllToDo /> },
       { path: "today-to-do", element: <TodayToDo /> },
       { path: "week-to-do", element: <WeekToDo /> },
-      { path: "projects-to-do", element: <Projects /> }
+      { path: "projects-to-do", element: <Projects /> },
+      { path: "notes", element: <Notes /> }
     ]
   }
 ]);

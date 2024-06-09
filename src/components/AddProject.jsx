@@ -57,18 +57,18 @@ const AddProject = ({
       setNewEntry({
         title: ""
       });
+      setRecentActions([
+        ...recentActions,
+        {
+          id: uuidv4(),
+          text: `${newEntry.title}`,
+          date: new Date().toISOString().slice(0, 10),
+          time: new Date().toLocaleTimeString(),
+          action: "Created project"
+        }
+      ]);
       dialogRef.current.close();
     }
-    setRecentActions([
-      ...recentActions,
-      {
-        id: uuidv4(),
-        text: `${newEntry.title}`,
-        date: new Date().toISOString().slice(0, 10),
-        time: new Date().toLocaleTimeString(),
-        action: "Created project"
-      }
-    ]);
   };
 
   return (

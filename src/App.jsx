@@ -109,7 +109,13 @@ function App() {
               </div>
             </div>
             <div>
-              <Link>Notes</Link>
+              <Link
+                onClick={() => setCurrentPage("notes")}
+                to={"/notes"}
+                className={`nav-links ${currentPage == "notes" ? "bg-blue-700" : null}`}
+              >
+                Notes
+              </Link>
             </div>
           </div>
         </nav>
@@ -129,7 +135,9 @@ function App() {
                     currentProjectPage: currentProjectPage,
                     setCurrentProjectPage: setCurrentProjectPage,
                     recentActions: recentActions,
-                    setRecentActions: setRecentActions
+                    setRecentActions: setRecentActions,
+                    notesData: notesData,
+                    setNotesData: setNotesData
                   }}
                 />
               )}

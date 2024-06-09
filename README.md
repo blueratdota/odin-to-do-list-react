@@ -13,3 +13,4 @@ Live preview - https://guileless-frangipane-30dd65.netlify.app/
 - accordion action buttons
 - edit edit-modal
 - add notes functionality
+- deletable notes

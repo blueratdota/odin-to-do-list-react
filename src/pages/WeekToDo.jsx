@@ -12,6 +12,8 @@ const WeekToDo = () => {
           setToDoData={context.setToDoData}
           currentPage={context.currentPage}
           projectsData={context.projectsData}
+          recentActions={context.recentActions}
+          setRecentActions={context.setRecentActions}
         />
         <AddToDo />
       </div>
