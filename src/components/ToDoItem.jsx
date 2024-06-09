@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-
+import { v4 as uuidv4 } from "uuid";
 import {
   SvgIcon,
   Accordion,
@@ -13,10 +13,26 @@ import PriorityCircle from "./PriorityCircle";
 import EditDialog from "./EditDialog";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
+const ToDoItem = ({
+  toDo,
+  toDoData,
+  setToDoData,
+  recentActions,
+  setRecentActions
+}) => {
   const [currentData, setCurrentData] = useState(toDo);
   const dialogRef = useRef(null);
   const handleDelete = () => {
+    setRecentActions([
+      ...recentActions,
+      {
+        id: uuidv4(),
+        text: `${currentData.title}`,
+        date: new Date().toISOString().slice(0, 10),
+        time: new Date().toLocaleTimeString(),
+        action: "Deleted"
+      }
+    ]);
     setToDoData(toDoData.filter((a) => a.id !== currentData.id));
   };
   const handleOpen = () => {
@@ -40,7 +56,7 @@ const ToDoItem = ({ toDo, toDoData, setToDoData }) => {
   };
 
   return (
-    <div className="">
+    <div className="pr-4">
       <Accordion className="rounded-lg text-xl shadow-sm">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

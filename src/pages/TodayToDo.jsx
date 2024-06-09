@@ -11,8 +11,11 @@ const TodayToDo = () => {
     <div className="flex flex-col gap-2 min-h-[82dvh]">
       <ToDoList
         toDoData={context.toDoData}
+        setToDoData={context.setToDoData}
         currentPage={context.currentPage}
         projectsData={context.projectsData}
+        recentActions={context.recentActions}
+        setRecentActions={context.setRecentActions}
       />
       <AddToDo />
     </div>

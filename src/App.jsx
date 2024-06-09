@@ -7,6 +7,8 @@ import ToDoList from "./components/ToDoList";
 import AddProject from "./components/AddProject";
 import ProjectList from "./components/ProjectList";
 import { isSameDay, isSameWeek } from "date-fns";
+import RecentActions from "./components/RecentActions";
+// import { getTime } from "date-fns";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("/");
@@ -26,12 +28,18 @@ function App() {
     if (localValue == null) return [];
     return JSON.parse(localValue);
   });
+  const [recentActions, setRecentActions] = useState(() => {
+    const localValue = localStorage.getItem("recentActions");
+    if (localValue == null) return [];
+    return JSON.parse(localValue);
+  });
 
   useEffect(() => {
     localStorage.setItem("toDo", JSON.stringify(toDoData));
     localStorage.setItem("notes", JSON.stringify(notesData));
     localStorage.setItem("projects", JSON.stringify(projectsData));
-  }, [toDoData, notesData, projectsData]);
+    localStorage.setItem("recentActions", JSON.stringify(recentActions));
+  }, [toDoData, notesData, projectsData, recentActions]);
 
   const today = new Date().toISOString().slice(0, 10);
   const todayDue = toDoData.filter((entry) => {
@@ -95,7 +103,8 @@ function App() {
                 <AddProject
                   projectsData={projectsData}
                   setProjectsData={setProjectsData}
-                  // onClick={() => setCurrentPage("projects-to-do")}
+                  recentActions={recentActions}
+                  setRecentActions={setRecentActions}
                 ></AddProject>
               </div>
             </div>
@@ -106,7 +115,7 @@ function App() {
         </nav>
         <main className="bg-orange-100 basis-full ">
           <div className="py-4 px-10 flex gap-10">
-            <div className="basis-full">
+            <div className="basis-full overflow-scroll overflow-x-hidden">
               {currentPage === "/" ? (
                 <HomePage />
               ) : (
@@ -118,12 +127,16 @@ function App() {
                     projectsData: projectsData,
                     setProjectsData: setProjectsData,
                     currentProjectPage: currentProjectPage,
-                    setCurrentProjectPage: setCurrentProjectPage
+                    setCurrentProjectPage: setCurrentProjectPage,
+                    recentActions: recentActions,
+                    setRecentActions: setRecentActions
                   }}
                 />
               )}
             </div>
-            <div className="basis-1/3">xxx</div>
+            <div className="basis-1/3 max-h-[86dvh] overflow-scroll overflow-x-hidden">
+              <RecentActions data={recentActions}></RecentActions>
+            </div>
           </div>
         </main>
       </section>

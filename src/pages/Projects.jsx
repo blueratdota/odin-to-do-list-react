@@ -8,9 +8,14 @@ const Projects = () => {
     <div className="flex flex-col gap-2">
       <ToDoList
         toDoData={context.toDoData}
+        setToDoData={context.setToDoData}
         currentPage={context.currentPage}
+        projectsData={context.projectsData}
         currentProject={context.currentProjectPage}
+        recentActions={context.recentActions}
+        setRecentActions={context.setRecentActions}
       />
+      <AddToDo />
     </div>
   );
 };

@@ -1,2 +1,15 @@
-# odin-to-do-list-react  
-- rewire clicking a project sets the currentproject page to be equal the name and becomes the filter for the ToDoList
+# Odin To Do React
+
+Live preview - https://guileless-frangipane-30dd65.netlify.app/
+
+# Features:
+
+- add to do
+- add a project
+- put to do item in a project
+
+# To be added/fixed:
+
+- accordion action buttons
+- edit edit-modal
+- add notes functionality

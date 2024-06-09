@@ -3,6 +3,7 @@ import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from "uuid";
 import PriorityCircle from "./PriorityCircle";
 import { useOutletContext } from "react-router-dom";
+
 //mui imports
 import {
   Switch,
@@ -109,6 +110,16 @@ const EditDialog = ({
           } else return toDo;
         })
       );
+      context.setRecentActions([
+        ...context.recentActions,
+        {
+          id: uuidv4(),
+          text: `${dataEdit.title}`,
+          date: new Date().toISOString().slice(0, 10),
+          time: new Date().toLocaleTimeString(),
+          action: "Edited"
+        }
+      ]);
       console.log("submit changes");
       handleClose();
     } else {

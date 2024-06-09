@@ -14,7 +14,9 @@ const AllToDo = () => {
         setToDoData={context.setToDoData}
         currentPage={context.currentPage}
         projectsData={context.projectsData}
-      />
+        recentActions={context.recentActions}
+        setRecentActions={context.setRecentActions}
+      ></ToDoList>
       <AddToDo />
     </div>
   );

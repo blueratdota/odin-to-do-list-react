@@ -127,6 +127,16 @@ const AddToDo = () => {
   };
   const proceedSubmit = () => {
     if (checkFields()) {
+      context.setRecentActions([
+        ...context.recentActions,
+        {
+          id: uuidv4(),
+          text: `${newEntry.title}`,
+          date: new Date().toISOString().slice(0, 10),
+          time: new Date().toLocaleTimeString(),
+          action: "Added"
+        }
+      ]);
       context.setToDoData([...context.toDoData, { id: uuidv4(), ...newEntry }]);
       setNewEntry({
         title: "",
@@ -136,6 +146,7 @@ const AddToDo = () => {
         inProject: false,
         projectName: null
       });
+
       dialogRef.current.close();
     } else {
       alert("empty field / duplicate title");
@@ -168,7 +179,7 @@ const AddToDo = () => {
   });
 
   return (
-    <div className="flex bg-white shadow-sm rounded-lg text-lg min-h-[48px] px-4 items-center gap-2">
+    <div className="flex bg-white shadow-sm rounded-lg text-lg min-h-[48px] px-4 items-center gap-2 mr-4">
       <PriorityCircle priority={"low"}></PriorityCircle>
       <PriorityCircle priority={"medium"}></PriorityCircle>
       <PriorityCircle priority={"high"}></PriorityCircle>

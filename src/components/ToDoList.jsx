@@ -4,7 +4,14 @@ import { isSameDay, isSameWeek } from "date-fns";
 
 import ToDoItem from "./ToDoItem";
 
-const ToDoList = ({ toDoData, currentPage, currentProject, setToDoData }) => {
+const ToDoList = ({
+  toDoData,
+  currentPage,
+  currentProject,
+  setToDoData,
+  recentActions,
+  setRecentActions
+}) => {
   // console.log(`current page = ${currentPage}`);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -42,6 +49,8 @@ const ToDoList = ({ toDoData, currentPage, currentProject, setToDoData }) => {
         toDoData={toDoData}
         setToDoData={setToDoData}
         key={toDo.id}
+        recentActions={recentActions}
+        setRecentActions={setRecentActions}
       ></ToDoItem>
     );
   });
