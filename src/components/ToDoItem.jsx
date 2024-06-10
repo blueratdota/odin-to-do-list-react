@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   SvgIcon,
@@ -7,7 +7,8 @@ import {
   AccordionDetails,
   AccordionActions,
   Button,
-  Fade
+  Fade,
+  Checkbox
 } from "@mui/material";
 import PriorityCircle from "./PriorityCircle";
 import EditDialog from "./EditDialog";
@@ -21,6 +22,17 @@ const ToDoItem = ({
   setRecentActions
 }) => {
   const [currentData, setCurrentData] = useState(toDo);
+  // console.log(currentData);
+  useEffect(() => {
+    setToDoData(
+      toDoData.map((toDo) => {
+        if (toDo.id == currentData.id) {
+          return { isDone: !currentData.isDone, ...currentData };
+        } else return toDo;
+      })
+    );
+    console.log("updated to do");
+  }, [currentData]);
   const dialogRef = useRef(null);
   const handleDelete = () => {
     setRecentActions([
@@ -54,6 +66,11 @@ const ToDoItem = ({
       handleClose();
     }
   };
+  const handleDoneBtn = () => {
+    // console.log(currentData.isDone);
+    setCurrentData({ ...currentData, isDone: !currentData.isDone });
+    // setCurrentData({ ...currentData, isDone: !isDone });
+  };
 
   return (
     <div className="pr-4">
@@ -77,13 +94,19 @@ const ToDoItem = ({
               <span className="font-bold">{`Project ${toDo.projectName}`}</span>
             </div>
           ) : (
-            <div>Not in a project</div>
+            <div>Not included in a project</div>
           )}
-          <p className="font-bold">Details:</p>
-          <div>{toDo.details}</div>
+          <p className="font-bold mt-2">Details:</p>
+          <div className="indent-4">{toDo.details}</div>
         </AccordionDetails>
-        <AccordionActions>
-          <div>
+        <AccordionActions className="flex mr-10 mb-2">
+          <div
+            className={`div-button ${currentData.isDone ? `bg-green-500 font-bold` : null} `}
+            onClick={handleDoneBtn}
+          >
+            Done
+          </div>
+          <div className="div-button">
             <p onClick={handleOpen}>Edit</p>
             <dialog
               ref={dialogRef}
@@ -99,7 +122,9 @@ const ToDoItem = ({
               ></EditDialog>
             </dialog>
           </div>
-          <Button onClick={handleDelete}>Delete</Button>
+          <div className="div-button" onClick={handleDelete}>
+            Delete
+          </div>
         </AccordionActions>
       </Accordion>
     </div>

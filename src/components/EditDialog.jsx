@@ -180,15 +180,6 @@ const EditDialog = ({
               <Select
                 options={options}
                 isDisabled={!toEdit.inProject}
-                // defaultValue={() => {
-                //   let i = "";
-                //   for (const x in options) {
-                //     if (options[x].value == toEdit.projectName) {
-                //       i = x;
-                //     }
-                //   }
-                //   return options[i];
-                // }}
                 value={{ value: toEdit.projectName, label: toEdit.projectName }}
                 onChange={handleSelect}
                 className="w-96"

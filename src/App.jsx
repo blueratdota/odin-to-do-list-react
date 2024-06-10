@@ -65,7 +65,7 @@ function App() {
               <Link
                 onClick={() => setCurrentPage("all-to-do")}
                 to={"/all-to-do"}
-                className={`nav-links ${currentPage == "all-to-do" ? "bg-blue-700" : null}`}
+                className={`nav-links ${currentPage == "all-to-do" ? "bg-blue-700 font-bold" : null}`}
               >
                 <div>{`All - `}</div>
                 <div className="font-bold">{toDoData.length}</div>
@@ -75,7 +75,7 @@ function App() {
               <Link
                 onClick={() => setCurrentPage("today-to-do")}
                 to={"/today-to-do"}
-                className={`nav-links ${currentPage == "today-to-do" ? "bg-blue-700" : null}`}
+                className={`nav-links ${currentPage == "today-to-do" ? "bg-blue-700 font-bold" : null}`}
               >
                 <div>{`Today - `}</div>
                 <div className="font-bold">{todayDue}</div>
@@ -84,7 +84,7 @@ function App() {
               <Link
                 onClick={() => setCurrentPage("week-to-do")}
                 to={"/week-to-do"}
-                className={`nav-links ${currentPage == "week-to-do" ? "bg-blue-700" : null}`}
+                className={`nav-links ${currentPage == "week-to-do" ? "bg-blue-700 font-bold" : null}`}
               >
                 <div>{`Week - `}</div>
                 <div className="font-bold">{weekDue}</div>
@@ -94,6 +94,7 @@ function App() {
               <p className="mb-2">Projects</p>
               <div className="flex flex-col gap-2 ml-5">
                 <ProjectList
+                  toDoData={toDoData}
                   projects={projectsData}
                   currentProject={currentProjectPage}
                   setProject={setCurrentProjectPage}
@@ -112,7 +113,7 @@ function App() {
               <Link
                 onClick={() => setCurrentPage("notes")}
                 to={"/notes"}
-                className={`nav-links ${currentPage == "notes" ? "bg-blue-700" : null}`}
+                className={`nav-links ${currentPage == "notes" ? "bg-blue-700 font-bold" : null}`}
               >
                 Notes
               </Link>

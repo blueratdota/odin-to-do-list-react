@@ -31,6 +31,9 @@
   .nav-links {
     @apply flex gap-2 px-2 py-1 rounded-lg items-center;
   }
+  .div-button {
+    @apply py-2 w-24 text-center select-none hover:bg-blue-100 hover:font-bold active:scale-95 cursor-pointer bg-opacity-60 rounded-lg;
+  }
 
   .note-item {
     overflow: hidden;

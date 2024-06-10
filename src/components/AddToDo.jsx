@@ -137,7 +137,10 @@ const AddToDo = () => {
           action: "Added"
         }
       ]);
-      context.setToDoData([...context.toDoData, { id: uuidv4(), ...newEntry }]);
+      context.setToDoData([
+        ...context.toDoData,
+        { id: uuidv4(), isDone: false, ...newEntry }
+      ]);
       setNewEntry({
         title: "",
         details: "",
