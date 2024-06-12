@@ -32,8 +32,9 @@ const ProjectList = ({
             <ArrowRightIcon />
           </SvgIcon>
 
-          <div>
-            {entry.title} - <span className="font-bold">{projectEntries}</span>
+          <div className="flex gap-2 items-center text-lg">
+            <p className="truncate max-w-48">{entry.title}</p> -{" "}
+            <p className="font-bold">{projectEntries}</p>
           </div>
         </div>
       </Link>

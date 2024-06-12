@@ -92,7 +92,7 @@ function App() {
             </div>
             <div className="border-b pb-3">
               <p className="mb-2">Projects</p>
-              <div className="flex flex-col gap-2 ml-5">
+              <div className="flex flex-col gap-1 ml-5">
                 <ProjectList
                   toDoData={toDoData}
                   projects={projectsData}
