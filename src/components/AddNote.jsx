@@ -1,6 +1,7 @@
 import { Button, SvgIcon } from "@mui/material";
 import { useState, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useImmer } from "use-immer";
 import { v4 as uuidv4 } from "uuid";
 
@@ -92,8 +93,16 @@ const AddNote = ({
     return false;
   };
   return (
-    <div className="max-w-80 bg-white shadow-sm rounded-lg p-4">
-      <Button onClick={handleOpen}>click me to add note</Button>
+    <div className="max-w-80 min-h-[252px] bg-white shadow-sm rounded-lg p-4">
+      <div
+        onClick={handleOpen}
+        className="text-center active:scale-95 hover:cursor-pointer"
+      >
+        <SvgIcon className="text-[180px] text-yellow-500">
+          <AddCircleOutlineIcon></AddCircleOutlineIcon>
+        </SvgIcon>
+        <p className="mt-2 text-xl font-bold">Click to add a note</p>
+      </div>
       <dialog
         className=" w-[40vw] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
         ref={dialogRef}
@@ -101,7 +110,7 @@ const AddNote = ({
       >
         <div className="flex justify-between items-center px-4 py-2 bg-yellow-500">
           <p className="text-xl font-bold">Add new note</p>
-          <SvgIcon className="stroke-[10px]" onClick={handleClose}>
+          <SvgIcon className=" hover:cursor-pointer" onClick={handleClose}>
             {<CloseIcon />}
           </SvgIcon>
         </div>
@@ -127,11 +136,15 @@ const AddNote = ({
             className="text-xl border-0 outline-none"
             value={newEntry.details}
           ></textarea>
+          <div className="flex gap-5 justify-center">
+            <Button variant="outlined" onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+          </div>
         </form>
-        <div>
-          <Button onClick={handleSubmit}>Submit</Button>
-          <Button>Cancel</Button>
-        </div>
       </dialog>
     </div>
   );

@@ -30,7 +30,7 @@ const ToDoList = ({
     });
   }
   if (currentPage == "week-to-do") {
-    console.log("WEEK to do");
+    // console.log("WEEK to do");
     filteredToDo = completeToDoList.filter((entry) => {
       return isSameWeek(today, entry.dueDate);
     });

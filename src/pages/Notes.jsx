@@ -7,15 +7,25 @@ const Notes = () => {
   return (
     <div className="mr-4">
       <div className="grid grid-cols-4 gap-4">
-        {context.notesData.map((item) => {
-          return <NoteItem key={item.id} item={item}></NoteItem>;
-        })}
         <AddNote
           notesData={context.notesData}
           setNotesData={context.setNotesData}
           recentActions={context.recentActions}
           setRecentActions={context.setRecentActions}
         ></AddNote>
+        {[...context.notesData].reverse().map((item, i) => {
+          return (
+            <NoteItem
+              key={item.id}
+              item={item}
+              index={i}
+              notesData={context.notesData}
+              setNotesData={context.setNotesData}
+              recentActions={context.recentActions}
+              setRecentActions={context.setRecentActions}
+            ></NoteItem>
+          );
+        })}
       </div>
     </div>
   );

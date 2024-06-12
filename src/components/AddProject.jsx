@@ -81,7 +81,7 @@ const AddProject = ({
       >
         <div className="flex justify-between items-center px-4 py-2 bg-yellow-500">
           <p className="text-xl font-bold">Add new project</p>
-          <SvgIcon className="stroke-[10px]" onClick={handleClose}>
+          <SvgIcon className=" hover:cursor-pointer" onClick={handleClose}>
             {<CloseIcon />}
           </SvgIcon>
         </div>

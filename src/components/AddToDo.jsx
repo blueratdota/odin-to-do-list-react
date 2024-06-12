@@ -31,17 +31,13 @@ const AddToDo = () => {
   });
   const [prevSelect, setPrevSelect] = useState();
 
-  // useEffect(() => {
-  //   console.log(newEntry.projectName);
-  // }, [newEntry]);
-
   //handles modal
   //use ref for toggling showModal() and  close()
   //handleClickOutside for closing the modal if anything outside the modal is clicked
   const dialogRef = useRef(null);
 
   const handleOpen = () => {
-    console.log("close modal");
+    // console.log("close modal");
     dialogRef.current.showModal();
   };
   const handleClose = () => {
@@ -199,7 +195,7 @@ const AddToDo = () => {
       >
         <div className="flex justify-between items-center px-4 py-2 bg-yellow-500">
           <p className="text-xl font-bold">Add new To Do Entry</p>
-          <SvgIcon className="stroke-[10px]" onClick={handleClose}>
+          <SvgIcon className=" hover:cursor-pointer" onClick={handleClose}>
             {<CloseIcon />}
           </SvgIcon>
         </div>

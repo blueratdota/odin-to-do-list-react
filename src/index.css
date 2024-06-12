@@ -38,6 +38,7 @@
   .note-item {
     overflow: hidden;
     text-overflow: ellipsis;
+    overflow-wrap: break-word;
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;

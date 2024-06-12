@@ -121,8 +121,8 @@ function App() {
           </div>
         </nav>
         <main className="bg-orange-100 basis-full ">
-          <div className="py-4 px-10 flex gap-10">
-            <div className="basis-full overflow-scroll overflow-x-hidden">
+          <div className="py-4 px-10 flex gap-10 max-h-[89dvh]">
+            <div className="basis-full max-h overflow-x-hidden">
               {currentPage === "/" ? (
                 <HomePage />
               ) : (
@@ -143,7 +143,7 @@ function App() {
                 />
               )}
             </div>
-            <div className="basis-1/3 max-h-[86dvh] overflow-scroll overflow-x-hidden">
+            <div className="basis-1/3  overflow-auto overflow-x-hidden">
               <RecentActions data={recentActions}></RecentActions>
             </div>
           </div>

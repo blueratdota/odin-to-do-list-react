@@ -120,7 +120,7 @@ const EditDialog = ({
           action: "Edited"
         }
       ]);
-      console.log("submit changes");
+      // console.log("submit changes");
       handleClose();
     } else {
       alert("empty field / duplicate title");
@@ -138,96 +138,99 @@ const EditDialog = ({
           {<CloseIcon />}
         </SvgIcon>
       </div>
-      <div>
-        <form action="submit" className="flex flex-col p-4 gap-4">
+      <form action="submit" className="flex flex-col p-4 gap-4 font-light">
+        <input
+          onChange={handleTitleInput}
+          type="text"
+          required
+          maxLength={50}
+          className="text-2xl border-0 outline-none"
+          value={toEdit.title}
+        />
+        <textarea
+          onChange={handleDetailsInput}
+          name="details"
+          id="details"
+          cols={30}
+          rows={8}
+          required
+          maxLength={500}
+          className="text-xl border-0 outline-none"
+          value={toEdit.details}
+        ></textarea>
+        <div>
+          <FormControl className="flex flex-row">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={toEdit.inProject}
+                    onChange={handleSwitch}
+                    disabled={context.projectsData.length <= 0}
+                  />
+                }
+                label={
+                  !context.projectsData.length
+                    ? "Create a project first"
+                    : "In Project?"
+                }
+              />
+            </FormGroup>
+            <Select
+              options={options}
+              isDisabled={!toEdit.inProject}
+              value={{ value: toEdit.projectName, label: toEdit.projectName }}
+              onChange={handleSelect}
+              className="w-96"
+            ></Select>
+          </FormControl>
+        </div>
+        <label
+          htmlFor="input-date"
+          className="text-xl font-bold flex flex-row items-center "
+        >
+          Due date:
           <input
-            onChange={handleTitleInput}
-            type="text"
+            onChange={handleDateInput}
+            className="ml-2 p-1 px-4 rounded-lg border border-yellow-500 outline-yellow-600 text-lg font-thin"
+            type="date"
+            id="input-date"
+            value={toEdit.dueDate}
             required
-            maxLength={50}
-            className="text-2xl border-0 outline-none"
-            value={toEdit.title}
           />
-          <textarea
-            onChange={handleDetailsInput}
-            name="details"
-            id="details"
-            cols={30}
-            rows={8}
-            required
-            maxLength={500}
-            className="text-xl border-0 outline-none"
-            value={toEdit.details}
-          ></textarea>
-          <div>
-            <FormControl className="flex flex-row">
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={toEdit.inProject}
-                      onChange={handleSwitch}
-                      disabled={context.projectsData.length <= 0}
-                    />
-                  }
-                  label={
-                    !context.projectsData.length
-                      ? "Create a project first"
-                      : "In Project?"
-                  }
-                />
-              </FormGroup>
-              <Select
-                options={options}
-                isDisabled={!toEdit.inProject}
-                value={{ value: toEdit.projectName, label: toEdit.projectName }}
-                onChange={handleSelect}
-                className="w-96"
-              ></Select>
-            </FormControl>
-          </div>
-          <label htmlFor="input-date" className="text-xl font-bold">
-            Due date:
-            <input
-              onChange={handleDateInput}
-              className="ml-2 p-1 px-4 rounded-lg border border-yellow-500 outline-yellow-600 text-lg font-thin"
-              type="date"
-              id="input-date"
-              value={toEdit.dueDate}
-              required
-            />
-          </label>
-          <div className="flex items-center justify-between">
-            <div>
-              <p>Priority</p>
-              <ToggleButtonGroup
-                value={toEdit.priority}
-                exclusive
-                onChange={handleSelectPriority}
-                aria-label="Platform"
-                className="h-8"
+        </label>
+        <div className="flex items-center justify-between">
+          <div className="flex gap-4">
+            <p className="font-bold">Priority</p>
+            <ToggleButtonGroup
+              value={toEdit.priority}
+              exclusive
+              onChange={handleSelectPriority}
+              aria-label="Platform"
+              className="h-8"
+            >
+              <ToggleButton
+                value="low"
+                className={`${toEdit.priority == "low" ? "bg-green-500 font-bold" : "bg-green-100"}`}
               >
-                <ToggleButton
-                  value="low"
-                  className={`${toEdit.priority == "low" ? "bg-green-500 font-bold" : "bg-green-100"}`}
-                >
-                  LOW
-                </ToggleButton>
-                <ToggleButton
-                  value="medium"
-                  className={`${toEdit.priority == "medium" ? "bg-yellow-400 font-bold" : "bg-yellow-100"}`}
-                >
-                  MEDIUM
-                </ToggleButton>
-                <ToggleButton
-                  value="high"
-                  className={`${toEdit.priority == "high" ? "bg-red-500 font-bold" : "bg-red-100"}`}
-                >
-                  HIGH
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </div>
+                LOW
+              </ToggleButton>
+              <ToggleButton
+                value="medium"
+                className={`${toEdit.priority == "medium" ? "bg-yellow-400 font-bold" : "bg-yellow-100"}`}
+              >
+                MEDIUM
+              </ToggleButton>
+              <ToggleButton
+                value="high"
+                className={`${toEdit.priority == "high" ? "bg-red-500 font-bold" : "bg-red-100"}`}
+              >
+                HIGH
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
 
+          <div>
             <Button
               onClick={handleSubmit}
               variant="outlined"
@@ -243,8 +246,8 @@ const EditDialog = ({
               Reset
             </Button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </>
   );
 };

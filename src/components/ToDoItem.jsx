@@ -31,7 +31,7 @@ const ToDoItem = ({
         } else return toDo;
       })
     );
-    console.log("updated to do");
+    // console.log("updated to do");
   }, [currentData]);
   const dialogRef = useRef(null);
   const handleDelete = () => {
